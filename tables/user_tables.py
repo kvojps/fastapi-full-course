@@ -38,5 +38,5 @@ class AccountTable(SqlAlchemyBaseEntity):
         DateTime, server_default=func.now(), onupdate=func.current_timestamp()
     )
     total_balance = Column(Float, nullable=False)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id")) #TODO: add unique=True
     user: Mapped["UserTable"] = relationship(back_populates="account")
