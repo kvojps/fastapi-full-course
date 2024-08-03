@@ -1,5 +1,5 @@
 from settings.db_settings import repository
-from tables.user_table import UserTable
+from tables.user_tables import UserTable
 
 
 @repository
