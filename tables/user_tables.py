@@ -1,3 +1,4 @@
+from typing import List
 from sqlalchemy import (
     Boolean,
     Column,
@@ -40,3 +41,19 @@ class AccountTable(SqlAlchemyBaseEntity):
     total_balance = Column(Float, nullable=False)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), unique=True)
     user: Mapped["UserTable"] = relationship(back_populates="account")
+    transactions: Mapped[List["TransactionTable"]] = relationship(
+        back_populates="account", cascade="all, delete-orphan"
+    )
+
+
+class TransactionTable(SqlAlchemyBaseEntity):
+    __tablename__ = "transactions"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(
+        DateTime, server_default=func.now(), onupdate=func.current_timestamp()
+    )
+    amount = Column(Float, nullable=False)
+    account_id: Mapped[int] = mapped_column(ForeignKey("accounts.id"))
+    account: Mapped["AccountTable"] = relationship(back_populates="transactions")
