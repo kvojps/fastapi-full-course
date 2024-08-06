@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 from repositories.paginator import paginate_query
 from settings.db_settings import repository
 from tables.user_tables import UserTable
@@ -27,28 +27,27 @@ def get_users(page: int, per_page: int, **kwargs) -> List[dict]:
 
 
 @repository
-def get_user_by_id(user_id: int, **kwargs) -> Optional[dict]:
+def get_user_by_id(user_id: int, **kwargs) -> dict:
     session = kwargs.get("session")
     user = _get_user_by_id(session, user_id)
 
-    return _entity_to_dict(user) if user else None
+    return _entity_to_dict(user)
+
 
 @repository
-def get_user_by_email(email: str, **kwargs) -> Optional[dict]:
+def get_user_by_email(email: str, **kwargs) -> dict:
     session = kwargs.get("session")
     user = session.query(UserTable).filter(UserTable.email == email).first()
 
-    return _entity_to_dict(user) if user else None
+    return _entity_to_dict(user)
 
 
 @repository
 def update_user(
     user_id: int, username: str, password: str, is_active: bool, **kwargs
-) -> Optional[dict]:
+) -> dict:
     session = kwargs.get("session")
     user = _get_user_by_id(session, user_id)
-    if not user:
-        return None
 
     user.username = username
     user.password = password
@@ -62,9 +61,6 @@ def update_user(
 def delete_user(user_id: int, **kwargs) -> None:
     session = kwargs.get("session")
     user = _get_user_by_id(session, user_id)
-    if not user:
-        return None
-
     session.delete(user)
 
 
@@ -79,5 +75,8 @@ def _entity_to_dict(user: UserTable) -> dict:
     }
 
 
-def _get_user_by_id(session, user_id: int) -> Optional[UserTable]:
-    return session.query(UserTable).get(user_id)
+def _get_user_by_id(session, user_id: int) -> UserTable:
+    if (user := session.query(UserTable).get(user_id)) is None:
+        raise KeyError(f"User not found")
+
+    return user
