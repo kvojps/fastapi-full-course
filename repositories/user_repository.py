@@ -48,7 +48,6 @@ def update_user(
 ) -> dict:
     session = kwargs.get("session")
     user = _get_user_by_id(session, user_id)
-
     user.username = username
     user.password = password
     user.is_active = is_active
