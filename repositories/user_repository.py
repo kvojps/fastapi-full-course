@@ -33,7 +33,6 @@ def get_user_by_id(user_id: int, **kwargs) -> Optional[dict]:
 
     return _entity_to_dict(user) if user else None
 
-
 @repository
 def get_user_by_email(email: str, **kwargs) -> Optional[dict]:
     session = kwargs.get("session")
@@ -45,9 +44,12 @@ def get_user_by_email(email: str, **kwargs) -> Optional[dict]:
 @repository
 def update_user(
     user_id: int, username: str, password: str, is_active: bool, **kwargs
-) -> dict:
+) -> Optional[dict]:
     session = kwargs.get("session")
     user = _get_user_by_id(session, user_id)
+    if not user:
+        return None
+
     user.username = username
     user.password = password
     user.is_active = is_active
@@ -60,6 +62,9 @@ def update_user(
 def delete_user(user_id: int, **kwargs) -> None:
     session = kwargs.get("session")
     user = _get_user_by_id(session, user_id)
+    if not user:
+        return None
+
     session.delete(user)
 
 
@@ -74,5 +79,5 @@ def _entity_to_dict(user: UserTable) -> dict:
     }
 
 
-def _get_user_by_id(session, user_id: int) -> UserTable:
+def _get_user_by_id(session, user_id: int) -> Optional[UserTable]:
     return session.query(UserTable).get(user_id)
