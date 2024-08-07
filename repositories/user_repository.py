@@ -37,7 +37,10 @@ def get_user_by_id(user_id: int, **kwargs) -> dict:
 @repository
 def get_user_by_email(email: str, **kwargs) -> dict:
     session = kwargs.get("session")
-    user = session.query(UserTable).filter(UserTable.email == email).first()
+    if (
+        user := session.query(UserTable).filter(UserTable.email == email).first()
+    ) is None:
+        raise KeyError(f"User not found")
 
     return _entity_to_dict(user)
 
@@ -77,5 +80,4 @@ def _entity_to_dict(user: UserTable) -> dict:
 def _get_user_by_id(session, user_id: int) -> UserTable:
     if (user := session.query(UserTable).get(user_id)) is None:
         raise KeyError(f"User not found")
-
     return user
