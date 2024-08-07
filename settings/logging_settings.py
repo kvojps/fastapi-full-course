@@ -30,8 +30,8 @@ def init_logging():
 
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(LoggingFormatter())
-    logger.setLevel(settings.LOG_LEVEL)
     logger.addHandler(stream_handler)
+    logger.setLevel(settings.LOG_LEVEL)
 
     return logger
 
