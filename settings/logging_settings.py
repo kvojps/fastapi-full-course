@@ -1,7 +1,7 @@
 import logging
 from settings.env_settings import settings
 
-
+#TODO: Improve attributes declaration
 class LoggingFormatter(logging.Formatter):
     green = "\033[0;32m"
     yellow = "\x1b[33;20m"
