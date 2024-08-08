@@ -1,21 +1,18 @@
 import logging
 from settings.env_settings import settings
 
-#TODO: Improve attributes declaration
-class LoggingFormatter(logging.Formatter):
-    green = "\033[0;32m"
-    yellow = "\x1b[33;20m"
-    red = "\033[0;31m"
-    reset = "\x1b[0m"
-    format = (
-        "%(asctime)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
-    )
 
+class LoggingFormatter(logging.Formatter):
+    GREEN = "\033[0;32m"
+    YELLOW = "\x1b[33;20m"
+    RED = "\033[0;31m"
+    RESET = "\x1b[0m"
+    FORMAT = "%(asctime)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
     FORMATS = {
-        logging.DEBUG: green + format + reset,
-        logging.INFO: green + format + reset,
-        logging.WARNING: yellow + format + reset,
-        logging.ERROR: red + format + reset,
+        logging.DEBUG: GREEN + FORMAT + RESET,
+        logging.INFO: GREEN + FORMAT + RESET,
+        logging.WARNING: YELLOW + FORMAT + RESET,
+        logging.ERROR: RED + FORMAT + RESET,
     }
 
     def format(self, record):
