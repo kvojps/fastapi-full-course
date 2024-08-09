@@ -10,7 +10,7 @@ from sqlalchemy import (
     func,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from settings.db_settings import SqlAlchemyBaseEntity
+from core.infrastructure.settings.db_settings import SqlAlchemyBaseEntity
 
 
 class UserTable(SqlAlchemyBaseEntity):

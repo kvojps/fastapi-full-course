@@ -1,5 +1,5 @@
 import logging
-from settings.env_settings import settings
+from core.infrastructure.settings.env_settings import settings
 
 
 class LoggingFormatter(logging.Formatter):

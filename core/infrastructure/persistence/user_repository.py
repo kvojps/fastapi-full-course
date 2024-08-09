@@ -1,7 +1,7 @@
 from typing import List
-from repositories.paginator import paginate_query
-from settings.db_settings import repository
-from tables.user_tables import UserTable
+from core.infrastructure.persistence.paginator import paginate_query
+from core.infrastructure.persistence.entities import UserTable
+from core.infrastructure.settings.db_settings import repository
 
 
 @repository

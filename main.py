@@ -1,4 +1,4 @@
-from repositories.user_repository import (
+from core.infrastructure.persistence.user_repository import (
     create_user,
     delete_user,
     get_user_by_email,
@@ -6,7 +6,7 @@ from repositories.user_repository import (
     get_users,
     update_user,
 )
-from settings.logging_settings import logger
+from core.infrastructure.settings.logging_settings import logger
 
 if __name__ == "__main__":
     logger.debug("teste debug")
