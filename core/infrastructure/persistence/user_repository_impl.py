@@ -29,9 +29,9 @@ class UserRepositoryImpl(IUserRepository):
     @repository
     def get_user_by_id(self, user_id: int, **kwargs) -> dict:
         session = kwargs.get("session")
-        user = _get_user_by_id(session, user_id)
+        user = self._get_user_by_id(session, user_id)
 
-        return _entity_to_dict(user)
+        return self._entity_to_dict(user)
 
     @repository
     def get_user_by_email(self, email: str, **kwargs) -> dict:
@@ -41,7 +41,7 @@ class UserRepositoryImpl(IUserRepository):
         ) is None:
             raise KeyError(f"User not found")
 
-        return _entity_to_dict(user)
+        return self._entity_to_dict(user)
 
     @repository
     def update_user(
