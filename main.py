@@ -1,33 +1,11 @@
-from core.infrastructure.persistence.user_repository import (
-    create_user,
-    delete_user,
-    get_user_by_email,
-    get_user_by_id,
-    get_users,
-    update_user,
-)
-from core.infrastructure.settings.logging_settings import logger
+from core.infrastructure.persistence.user_repository_impl import UserRepositoryImpl
 
 if __name__ == "__main__":
-    logger.debug("teste debug")
-    logger.info("teste info")
-    logger.warning("teste warning")
-    logger.error("teste error")
-    # created_user = create_user(
-    #     username="teste", password="teste", email="teste@teste.com", is_active=True
-    # )
-    # print(created_user)
+    repo = UserRepositoryImpl()
+    created_user = repo.create_user(
+        username="test2e", password="te2ste", email="teste@tes22te.com", is_active=True
+    )
+    print(created_user)
 
-    # users = get_users(page=1, per_page=10)
-    # print(users)
-
-    # user_by_id = get_user_by_id(user_id=6)
-    # print(user_by_id)
-
-    # user_by_email = get_user_by_email(email="admin4@admin.com")
-    # print(user_by_email)
-
-    # updated_user = update_user(user_id=5, username="UPDATED", password="UPDATED", is_active=True)
-    # print(updated_user)
-
-    # delete_user(user_id=9)
+    users = repo.get_users(page=1, per_page=10)
+    print(users)
